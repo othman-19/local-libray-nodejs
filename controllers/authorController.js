@@ -1,4 +1,5 @@
-/* eslint-disable camelcase */
+/* eslint-disable consistent-return */
+
 const Author = require('../models/author');
 
 // Display list of all Authors.
