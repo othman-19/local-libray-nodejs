@@ -1,4 +1,4 @@
-/* eslint-disable comma-dangle */
+/* eslint-disable consistent-return */
 /* eslint-disable camelcase */
 const async = require('async');
 const Genre = require('../models/genre');
@@ -48,7 +48,7 @@ exports.genre_detail = function (req, res, next) {
         genre: results.genre,
         genre_books: results.genre_books,
       });
-    }
+    },
   );
 };
 
