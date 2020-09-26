@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
-/* eslint-disable camelcase */
 const async = require('async');
+const validator = require('express-validator');
 const Genre = require('../models/genre');
 const Book = require('../models/book');
 
