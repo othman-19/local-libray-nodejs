@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-const { body,validationResult } = require('express-validator/check');
+const { body, validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 const async = require('async');
 const Book = require('../models/book');
@@ -54,8 +54,9 @@ exports.author_detail = function (req, res, next) {
 };
 
 // Display Author create form on GET.
-exports.author_create_get = function (req, res) {
-  res.send('NOT IMPLEMENTED: Author create GET');
+// eslint-disable-next-line no-unused-vars
+exports.author_create_get = function (req, res, next) {
+  res.render('author_form', { title: 'Create Author' });
 };
 
 // Handle Author create on POST.
