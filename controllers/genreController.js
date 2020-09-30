@@ -120,7 +120,7 @@ exports.genre_delete_get = function (req, res, next) {
       if (err) {
         return next(err);
       }
-      if (results.author == null) {
+      if (results.genre == null) {
         // No results.
         res.redirect('/catalog/genres');
       }
