@@ -130,29 +130,6 @@ exports.bookinstance_delete_get = function (req, res, next) {
     .populate('book')
     .exec();
 };
-//   async.parallel(
-//     {
-//       bookinstance(callback) {
-//         BookInstance.findById(req.params.id).exec(callback);
-//       },
-//     },
-//     (err, results) => {
-//       if (err) {
-//         return next(err);
-//       }
-//       if (results.author == null) {
-//         // No results.
-//         res.redirect('/catalog/authors');
-//       }
-//       // Successful, so render.
-//       res.render('author_delete', {
-//         title: 'Delete Author',
-//         author: results.author,
-//         author_books: results.authors_books,
-//       });
-//     },
-//   );
-// };
 
 // Handle BookInstance delete on POST.
 exports.bookinstance_delete_post = function (req, res) {
