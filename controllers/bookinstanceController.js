@@ -126,7 +126,9 @@ exports.bookinstance_delete_get = function (req, res, next) {
         bookinstance,
       });
     }
-  }).exec();
+  })
+    .populate('book')
+    .exec();
 };
 //   async.parallel(
 //     {
