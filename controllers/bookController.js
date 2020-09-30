@@ -199,7 +199,7 @@ exports.book_delete_get = function (req, res, next) {
         Book.findById(req.params.id).exec(callback);
       },
       book_instances(callback) {
-        BookInstance.find({ Book: req.params.id }).exec(callback);
+        BookInstance.find({ book: req.params.id }).exec(callback);
       },
     },
     (err, results) => {
