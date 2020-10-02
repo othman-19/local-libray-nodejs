@@ -192,6 +192,62 @@ exports.bookinstance_update_get = function (req, res, next) {
 };
 
 // Handle bookinstance update on POST.
-exports.bookinstance_update_post = function (req, res) {
-  res.send('NOT IMPLEMENTED: BookInstance update POST');
-};
+exports.bookinstance_update_post = [
+  // Validate fields.
+  body('book', 'Book must be specified').trim().isLength({ min: 1 }),
+  body('imprint', 'Imprint must be specified').trim().isLength({ min: 1 }),
+  body('due_back', 'Invalid date').optional({ checkFalsy: true }).isISO8601(),
+
+  // Sanitize fields.
+  sanitizeBody('book').escape(),
+  sanitizeBody('imprint').escape(),
+  sanitizeBody('status').trim().escape(),
+  sanitizeBody('due_back').toDate(),
+
+  // Process request after validation and sanitization.
+  (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    // Create a BookInstance object with escaped and trimmed data.
+    const bookinstance = new BookInstance({
+      book: req.body.book,
+      imprint: req.body.imprint,
+      status: req.body.status,
+      due_back: req.body.due_back,
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render form again with sanitized values and error messages.
+      Book.find({}, 'title').exec((err, books) => {
+        if (err) {
+          return next(err);
+        }
+        // Successful, so render.
+        res.render('bookinstance_form', {
+          title: 'Update BookInstance',
+          book_list: books,
+          selected_book: bookinstance.book._id,
+          errors: errors.array(),
+          bookinstance,
+          bookinstance_due_date: bookinstance.due_back_for_update,
+        });
+      });
+    } else {
+      // Data from form is valid. Update the record.
+      BookInstance.findByIdAndUpdate(
+        req.params.id,
+        bookinstance,
+        {},
+        (err, updatedInstance) => {
+          if (err) {
+            return next(err);
+          }
+          // Successful - redirect to book detail page.
+          res.redirect(updatedInstance.url);
+        },
+      );
+    }
+  },
+];
