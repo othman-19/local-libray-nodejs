@@ -183,6 +183,7 @@ exports.bookinstance_update_get = function (req, res, next) {
       res.render('bookinstance_form', {
         title: 'Update BookInstance',
         bookinstance: results.bookinstance,
+        bookinstance_due_date: results.bookinstance.due_back_for_update,
         book_list: results.books,
         selected_book: results.bookinstance.book._id,
       });
